@@ -16,4 +16,29 @@
 
   {# Default CSS Link#}
   <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+
+  {# 나눔스퀘어글꼴 => 안됨 #}
+  <style>
+    @font-face {
+        font-family: 'NanumSquareR';
+        src: local('NanumSquareR');
+        url("{% static 'fonts/NanumSquareR.otf' %}" format("opentype")
+    }
+    @font-face {
+        font-family: 'NanumSquareEB';
+        src: local('NanumSquareEB');
+        url("{% static 'fonts/NanumSquareEB.otf' %}" format("opentype")
+    }
+    @font-face {
+        font-family: 'NanumSquareB';
+        src: local('NanumSquareB');
+        url("{% static 'fonts/NanumSquareB.otf' %}" format("opentype")
+    }
+    @font-face {
+        font-family: 'NanumSquareL';
+        src: local('NanumSquareL');
+        url("{% static 'fonts/NanumSquareL.otf' %}" format("opentype")
+    }
+  </style>
+  <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
 </head>

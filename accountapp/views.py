@@ -39,4 +39,5 @@ class AccountCreateView(CreateView):
   # 왜 reverse_lazy? => 함수와 클래스가 불러와지는 방식의 차이 때문...
   # 클래스 형 view에서 reverse_lazy를 사용한다.
   success_url = reverse_lazy('accountapp:hello_world')
+  # 계정생성 템플릿은 만들어야 한다.
   template_name = 'accountapp/create.html'
