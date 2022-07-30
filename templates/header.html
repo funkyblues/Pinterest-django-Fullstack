@@ -6,6 +6,16 @@
     <span>nav1</span>
     <span>nav2</span>
     <span>nav3</span>
-    <span>nav4</span>
+    {% if not user.is_authenticated %}
+      {#  홈페이지 어디서든 로그인/로그아웃 버튼을 클릭하고 난 후에 redirect되는 곳이 request를 보낸 경로가 되도록 한 것    #}
+      <a href="{% url 'accountapp:login' %}?next={{ request.path }}">
+        <span>login</span>
+      </a>
+    {% else %}
+      <a href="{% url 'accountapp:logout' %}?next={{ request.path }}">
+        <span>logout</span>
+      </a>
+    {% endif %}
+
   </div>
 </div>
