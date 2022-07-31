@@ -4,8 +4,8 @@ from django.db import models
 # Create your models here.
 
 # 모델 생성
-# Account 와 Profile과 1대1 매칭
 class Profile(models.Model):
+  # Account 와 Profile과 1대1 매칭
   # on_delete => user객체가 없어질 때 profile 객체가 하는 행동
   # CASCADE => profile도 없어진다는 뜻
   # related_name => user의 profile에 접근할 수 있도록 이름을 적어준 것

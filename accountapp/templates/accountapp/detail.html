@@ -7,9 +7,19 @@
         {#   다른사람이 우리의 페이지로 오더라도 우리의 정보를 볼 수 있도록    #}
         {{ target_user.date_joined }}
       </p>
-      <h2 style="font-family: 'NanumSquareBold">
-        {{ target_user.username }}
-      </h2>
+      {#  현재 사용중인 user의 프로필이 있다면 nickname 표출  #}
+      {% if target_user.profile %}
+        <h2 style="font-family: 'NanumSquareBold">
+          {{ target_user.profile.nickname }}
+        </h2>
+      {#  없다면 링크 표출  #}
+      {% else %}
+      <a href="{% url 'profileapp:create' %}">
+        <h2 style="font-family: 'NanumSquareBold">
+          Create Profile
+        </h2>
+      </a>
+      {% endif %}
 
       {#  만약 target_user가 지금 접속한 user와 같다면  #}
       {% if target_user == user  %}
