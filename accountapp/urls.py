@@ -1,6 +1,6 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
-from accountapp.views import hello_world, AccountCreateView
+from accountapp.views import hello_world, AccountCreateView, AccountDetailView
 
 app_name = "accountapp"
 # 쓰는 이유? -> 개발 중에는 "127.0.0.1:8000/account/hello_world"
@@ -15,4 +15,7 @@ urlpatterns = [
   path('logout/', LogoutView.as_view(), name='logout'),
 
   path('create/', AccountCreateView.as_view(), name='create'),
+  # 특정 유저 정보를 보기 위해 ID(Primary Key)가 필요하다.
+  # 특정 유저 객체에 부여된 고유한 키.
+  path('detail/<int:pk>', AccountDetailView.as_view(), name='detail'),
 ]

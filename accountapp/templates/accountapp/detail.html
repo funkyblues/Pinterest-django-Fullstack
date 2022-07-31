@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <div>
+    <div style="text-align: center; max-width: 500px; margin: 4rem auto;">
+      <p>
+        {#   다른사람이 우리의 페이지로 오더라도 우리의 정보를 볼 수 있도록    #}
+        {{ target_user.date_joined }}
+      </p>
+      <h2 style="font-family: 'NanumSquareBold">
+        {{ target_user.username }}
+      </h2>
+    </div>
+  </div>
+
+{% endblock %}

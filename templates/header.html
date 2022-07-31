@@ -7,11 +7,15 @@
     <span>nav2</span>
     <span>nav3</span>
     {% if not user.is_authenticated %}
-      {#  홈페이지 어디서든 로그인/로그아웃 버튼을 클릭하고 난 후에 redirect되는 곳이 request를 보낸 경로가 되도록 한 것    #}
+      {#  next : 홈페이지 어디서든 로그인/로그아웃 버튼을 클릭하고 난 후에 redirect되는 곳이 request를 보낸 경로가 되도록 한 것    #}
       <a href="{% url 'accountapp:login' %}?next={{ request.path }}">
         <span>login</span>
       </a>
     {% else %}
+      {# 로그인 된 user의 pk를 전달해 주어야 함 #}
+      <a href="{% url 'accountapp:detail' pk=user.pk %}">
+        <span>MyPage</span>
+      </a>
       <a href="{% url 'accountapp:logout' %}?next={{ request.path }}">
         <span>logout</span>
       </a>
