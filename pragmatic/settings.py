@@ -145,3 +145,9 @@ STATICFILES_DIRS = [
 # login, logout 후 next가 없다면, 사용하게 될 redirect 경로
 LOGIN_REDIRECT_URL = reverse_lazy('accountapp:hello_world')
 LOGOUT_REDIRECT_URL = reverse_lazy('accountapp:login')
+
+# media를 서버에 올렸을 때의 경로
+MEDIA_URL = '/media/'
+
+# media를 모아둘 경로. media 아래 디렉토리에 올린 사진들이 저장된다.
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
