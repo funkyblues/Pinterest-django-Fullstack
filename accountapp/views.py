@@ -1,4 +1,5 @@
 # django에서 기본적으로 제공하는 User
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
@@ -7,35 +8,39 @@ from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse, reverse_lazy
 # django에서 제공하는 CreateView 가져오기
+from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
+from accountapp.decorators import account_ownership_required
 from accountapp.forms import AccountUpdateForm
 from accountapp.models import HelloWorld
 
+# 직접 만든 데코레이터를 배열에 집어넣음
+# 이 배열만 메서드 데코레이터 에게 넘겨주면 된다
+has_ownership = [
+  account_ownership_required,
+  login_required
+]
 
+# django에서 제공하는 decorator 함수
+# login했는지 안했는지를 확인해줌...!
+@login_required
 def hello_world(request):
+  if request.method == "POST":
+    temp = request.POST.get('hello_world_input')
 
-  if request.user.is_authenticated:
+    # models.py의 HelloWorld 클래스로 새로운 객체 생성
+    new_hello_world = HelloWorld()
+    # POST로 전달한 데이터를 생성한 객체의 text에 대입
+    new_hello_world.text = temp
+    # save를 하여 실제 DB에 new_hello_world 객체(!!!)를 저장(!!!)하게 된다.
+    new_hello_world.save()
 
-    if request.method == "POST":
-
-      temp = request.POST.get('hello_world_input')
-
-      # models.py의 HelloWorld 클래스로 새로운 객체 생성
-      new_hello_world = HelloWorld()
-      # POST로 전달한 데이터를 생성한 객체의 text에 대입
-      new_hello_world.text = temp
-      # save를 하여 실제 DB에 new_hello_world 객체(!!!)를 저장(!!!)하게 된다.
-      new_hello_world.save()
-
-      return HttpResponseRedirect(reverse('accountapp:hello_world'))
-    else:
-      # HelloWorld의 모든 데이터를 다 가져온다
-      hello_world_list = HelloWorld.objects.all()
-      return render(request, 'accountapp/hello_world.html', context={'hello_world_list': hello_world_list})
+    return HttpResponseRedirect(reverse('accountapp:hello_world'))
   else:
-    return HttpResponseRedirect(reverse('accountapp:login'))
-
+    # HelloWorld의 모든 데이터를 다 가져온다
+    hello_world_list = HelloWorld.objects.all()
+    return render(request, 'accountapp/hello_world.html', context={'hello_world_list': hello_world_list})
 
 class AccountCreateView(CreateView):
   # django에서 기본 제공하는 모델 사용
@@ -63,6 +68,10 @@ class AccountDetailView(DetailView):
 
 # Update, Delete에도 context_object_name을 넣어준다
 
+# 일반 함수에 사용하는 decorator를 메서드에 사용할 수 있도록 변환해주는 데코레이터
+# 그리고 해당 클래스에서 사용할 메서드를 추가
+@method_decorator(has_ownership, 'get')
+@method_decorator(has_ownership, 'post')
 class AccountUpdateView(UpdateView):
   model = User
   context_object_name = 'target_user'
@@ -70,44 +79,11 @@ class AccountUpdateView(UpdateView):
   success_url = reverse_lazy('accountapp:hello_world')
   template_name = 'accountapp/update.html'
 
-  # 기존에 정의되어있는 get 메서드가 있음 그걸 상속받아서 수정하려는 것
-  def get(self, *args, **kwargs):
-    if self.request.user.is_authenticated and self.get_object() == self.request.user:
-      # 로그인이 되어 있다면, 부모의 기능대로 수행
-      return super().get(*args, **kwargs)
-    # 그렇지 않다면 forbidden
-    else:
-      return HttpResponseForbidden()
 
-    # 기존에 정의되어있는 get 메서드가 있음 그걸 상속받아서 수정하려는 것
-  def post(self, *args, **kwargs):
-    if self.request.user.is_authenticated and self.get_object() == self.request.user:
-      # 로그인이 되어 있다면, 부모의 기능대로 수행
-      return super().get(*args, **kwargs)
-    # 그렇지 않다면 forbidden
-    else:
-      return HttpResponseForbidden()
-
+@method_decorator(has_ownership, 'get')
+@method_decorator(has_ownership, 'post')
 class AccountDeleteView(DeleteView):
   model = User
   context_object_name = 'target_user'
   success_url = reverse_lazy('accountapp:login')
   template_name = 'accountapp/delete.html'
-  def get(self, *args, **kwargs):
-    # get_object -> 현재 self (AccountDeleteView)에서 사용되고 있는 user를 확인
-    # 그 유저가 request를 보내고 있는 user와 같은지를 확인.
-    if self.request.user.is_authenticated and self.get_object() == self.request.user:
-      # 로그인이 되어 있다면, 부모의 기능대로 수행
-      return super().get(*args, **kwargs)
-    # 그렇지 않다면 forbidden
-    else:
-      return HttpResponseForbidden()
-
-    # 기존에 정의되어있는 get 메서드가 있음 그걸 상속받아서 수정하려는 것
-  def post(self, *args, **kwargs):
-    if self.request.user.is_authenticated and self.get_object() == self.request.user:
-      # 로그인이 되어 있다면, 부모의 기능대로 수행
-      return super().get(*args, **kwargs)
-    # 그렇지 않다면 forbidden
-    else:
-      return HttpResponseForbidden()
