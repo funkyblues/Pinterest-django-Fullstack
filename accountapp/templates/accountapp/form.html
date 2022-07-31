@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+  <h1 style="text-align: center">
+    {% if "signup" in request.path %}
+      회원가입
+    {% else %}
+      로그인
+    {% endif %}
+  </h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form%}
+    <button type="submit" class="btn btn-primary">가입</button>
+  </form>
+
+{% endblock %}
