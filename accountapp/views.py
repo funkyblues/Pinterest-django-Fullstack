@@ -7,8 +7,9 @@ from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse, reverse_lazy
 # django에서 제공하는 CreateView 가져오기
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, UpdateView
 
+from accountapp.forms import AccountUpdateForm
 from accountapp.models import HelloWorld
 
 
@@ -48,5 +49,14 @@ class AccountDetailView(DetailView):
   # 특정 pk를 가지는 user의 url로 접속하면 그 pk의 user 정보를 보여주어야 하므로  context_object_name 에 저장
   # ex. 연예인들 페이지로 가더라도 detail은 사용자인 내 정보가 아닌 연예인 정보를 보여줘야 하니까
   # 다른사람이 와도 나의 정보를 보여줄 수 있도록...(?)
+
+  # 템플릿 파일에서 사용할 컨텍스트 변수
   context_object_name = 'target_user'
   template_name = 'accountapp/detail.html'
+
+
+class AccountUpdateView(UpdateView):
+  model = User
+  form_class = AccountUpdateForm
+  success_url = reverse_lazy('accountapp:hello_world')
+  template_name = 'accountapp/update.html'
