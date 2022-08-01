@@ -3,14 +3,16 @@
 
   <div>
     <div style="text-align: center; max-width: 500px; margin: 4rem auto;">
-      <p>
-        {#   다른사람이 우리의 페이지로 오더라도 우리의 정보를 볼 수 있도록    #}
-        {{ target_user.date_joined }}
-      </p>
+
+      {#   이미지를 가져온다   #}
+      <img src="{{ target_user.profile.image.url }}" alt="" style="height: 10rem; width: 10rem; border-radius: 20rem; margin-bottom: 2rem">
+    
       {#  현재 사용중인 user의 프로필이 있다면 nickname 표출  #}
       {% if target_user.profile %}
         <h2 style="font-family: 'NanumSquareBold">
           {{ target_user.profile.nickname }}
+          {#    닉네임을 바꾸고 싶을 때 #}
+          <a href="{% url 'profileapp:update' pk=target_user.profile.pk %}">edit</a>
         </h2>
       {#  없다면 링크 표출  #}
       {% else %}
@@ -20,6 +22,11 @@
         </h2>
       </a>
       {% endif %}
+
+      <h5 style="margin-bottom: 3rem">
+        {{ target_user.profile.message }}
+      </h5>
+
 
       {#  만약 target_user가 지금 접속한 user와 같다면  #}
       {% if target_user == user  %}
