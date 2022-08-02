@@ -47,3 +47,4 @@ class ProfileUpdateView(UpdateView):
     # user => 현재 user = target_profile
     return reverse('accountapp:detail', kwargs={'pk': self.object.user.pk})
 
+
