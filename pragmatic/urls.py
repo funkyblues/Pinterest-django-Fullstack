@@ -23,6 +23,8 @@ urlpatterns = [
     path('accounts/', include('accountapp.urls')),
     path('profiles/', include('profileapp.urls')),
     path('articles/', include('articleapp.urls')),
+    path('comments/', include('commentapp.urls')),
+
 #     미디어 관련 경로도 세팅
 #     pragmatic settings 안에 적은 모든것을 settings 를 가져옴으로써 사용 가능
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

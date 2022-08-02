@@ -32,6 +32,11 @@
           Delete
         </a>
       {% endif %}
+
+      {#  commentapp의 target_article을 article에 대입  #}
+      {% include 'commentapp/create.html' with article=target_article %}
+
+
     </div>
   </div>
 
