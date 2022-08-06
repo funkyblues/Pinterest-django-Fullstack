@@ -3,9 +3,19 @@
 
 {% block content %}
   <style>
+
+      .container {
+          padding: 0;
+          margin: 0 auto;
+      }
+
+      .container a {
+          {# 모바일에선 거의 45%, 데스크탑에선 거의 250px로#}
+          width: 45%;
+          max-width: 250px;
+      }
+
       .container div {
-          width: 250px;
-          background-color: antiquewhite;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -39,7 +49,7 @@
   {% include 'snippets/pagination.html' with page_obj=page_obj %}
 
   <div style="text-align: center">
-    <a href="{% url 'articleapp:create' %}" class="btn btn-dark rounded-pill col-3 mt-3 mb-3">
+    <a href="{% url 'articleapp:create' %}" class="btn btn-dark rounded-pill mt-3 mb-3 px-4">
       Create Article
     </a>
   </div>
