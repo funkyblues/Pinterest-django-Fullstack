@@ -15,6 +15,16 @@
     margin: 2rem 0;
 }
 
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    color: black;
+    text-decoration: none;
+}
+
 /* 스크린 사이즈가 500px 이하로 감소한다면 아래 스타일이 적용*/
 @media screen and (max-width:500px) {
     html {
@@ -22,3 +32,10 @@
     }
 }
 
+.pragmatic_header_nav {
+    margin: 0 0.5rem;
+}
+
+.pragmatic_header_navbar {
+    margin: 1rem 0;
+}

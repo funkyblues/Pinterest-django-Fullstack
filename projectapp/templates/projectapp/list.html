@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <style>
+
+      .container {
+          padding: 0;
+          margin: 0 auto;
+      }
+
+      {# 고정된 너비를 사용하기 위해 제거 #}
+      {#.container a {#}
+          {# 모바일에선 거의 45%, 데스크탑에선 거의 250px로#}
+      {#    width: 45%;#}
+      {#    max-width: 250px;#}
+      {##}
+
+      .container div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 1rem;
+      }
+
+      .container img {
+          width: 7rem;
+          height: 7rem;
+          object-fit: cover;
+          border-radius: 1rem;
+      }
+
+  </style>
+
+  {% if project_list %}
+  <div class="container">
+
+    {% for project in project_list %}
+      <a href="{% url 'projectapp:detail' pk=project.pk %}">
+        {#  include 구문을 이용해서 밖의 article을 article 변수에 넘겨주는 것   #}
+        {% include 'snippets/card_project.html' with project=project%}
+      </a>
+    {% endfor %}
+  </div>
+  {% else %}
+    <div style="text-align: center">
+      <h1>No Projects YET!</h1>
+    </div>
+
+  {% endif %}
+
+  {% include 'snippets/pagination.html' with page_obj=page_obj %}
+
+  <div style="text-align: center">
+    <a href="{% url 'projectapp:create' %}" class="btn btn-dark rounded-pill mt-3 mb-3 px-4">
+      Create Project
+    </a>
+  </div>
+  
+  <script src="{% static 'js/magicgrid.js' %}"></script>
+
+{% endblock %}

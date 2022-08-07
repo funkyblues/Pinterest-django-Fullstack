@@ -2,28 +2,32 @@
   <div>
     <h1 class="pragmatic_logo">Pragmatic</h1>
   </div>
-  <div>
+  <div class="pragmatic_header_navbar">
     <span>
-      <a href="{% url 'articleapp:list' %}">
+      <a href="{% url 'articleapp:list' %}"  class="pragmatic_header_nav">
         <span>Articles</span>
       </a>
     </span>
-    <span>nav2</span>
+    <span>
+      <a href="{% url 'projectapp:list' %}" class="pragmatic_header_nav">
+        <span>Projects</span>
+      </a>
+    </span>
     <span>nav3</span>
     {% if not user.is_authenticated %}
       {#  next : 홈페이지 어디서든 로그인/로그아웃 버튼을 클릭하고 난 후에 redirect되는 곳이 request를 보낸 경로가 되도록 한 것    #}
-      <a href="{% url 'accountapp:login' %}?next={{ request.path }}">
+      <a href="{% url 'accountapp:login' %}?next={{ request.path }}" class="pragmatic_header_nav">
         <span>login</span>
       </a>
-      <a href="{% url 'accountapp:create' %}">
+      <a href="{% url 'accountapp:create' %}" style="text-decoration-line: none;" class="pragmatic_header_nav">
         <span>SignUp</span>
       </a>
     {% else %}
       {# 로그인 된 user의 pk를 전달해 주어야 함 #}
-      <a href="{% url 'accountapp:detail' pk=user.pk %}">
+      <a href="{% url 'accountapp:detail' pk=user.pk %}" class="pragmatic_header_nav">
         <span>MyPage</span>
       </a>
-      <a href="{% url 'accountapp:logout' %}?next={{ request.path }}">
+      <a href="{% url 'accountapp:logout' %}?next={{ request.path }}" class="pragmatic_header_nav">
         <span>logout</span>
       </a>
     {% endif %}

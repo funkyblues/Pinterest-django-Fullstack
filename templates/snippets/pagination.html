@@ -1,18 +1,20 @@
 <div style="text-align: center; margin: 1rem 0;">
   {% if page_obj.has_previous %}
-    <a href="{% url 'articleapp:list' %}?page={{ page_obj.previous_page_number }}"
+    {#  원래는 {% url 'articleapp:list' %}라는 내용이 있었지만,  #}
+    {#  articleapp뿐 아니라 어떤 사이트에서도 사용할 수 있도록 제거  #}
+    <a href="?page={{ page_obj.previous_page_number }}"
         class="btn btn-secondary rounded-pill">
         {{ page_obj.previous_page_number }}
     </a>
   {% endif %}
 
-    <a href="{% url 'articleapp:list' %}?page={{ page_obj.number }}"
+    <a href="?page={{ page_obj.number }}"
         class="btn btn-secondary rounded-pill active">
         {{ page_obj.number }}
     </a>
 
   {% if page_obj.has_next %}
-    <a href="{% url 'articleapp:list' %}?page={{ page_obj.next_page_number }}"
+    <a href="?page={{ page_obj.next_page_number }}"
         class="btn btn-secondary rounded-pill">
         {{ page_obj.next_page_number }}
     </a>
