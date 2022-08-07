@@ -13,7 +13,11 @@
         <span>Projects</span>
       </a>
     </span>
-    <span>nav3</span>
+    <span>
+      <a href="{% url 'subscribeapp:list' %}" class="pragmatic_header_nav">
+        <span>Subscription</span>
+      </a>
+    </span>
     {% if not user.is_authenticated %}
       {#  next : 홈페이지 어디서든 로그인/로그아웃 버튼을 클릭하고 난 후에 redirect되는 곳이 request를 보낸 경로가 되도록 한 것    #}
       <a href="{% url 'accountapp:login' %}?next={{ request.path }}" class="pragmatic_header_nav">
