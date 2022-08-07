@@ -16,9 +16,9 @@
       <img style="width: 100%; border-radius: 1rem; margin:2rem 0;"
         src="{{ target_article.image.url }}" alt="">
 
-      <p>
-        {{ target_article.content }}
-      </p>
+      <div class="text-left">
+        {{ target_article.content | safe }}
+      </div>
       <hr>
 
       {# 인증기능 추가 #}
