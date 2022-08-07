@@ -25,6 +25,7 @@ urlpatterns = [
     path('articles/', include('articleapp.urls')),
     path('comments/', include('commentapp.urls')),
     path('projects/', include('projectapp.urls')),
+    path('subscribe/', include('subscribeapp.urls')),
 
 #     미디어 관련 경로도 세팅
 #     pragmatic settings 안에 적은 모든것을 settings 를 가져옴으로써 사용 가능
