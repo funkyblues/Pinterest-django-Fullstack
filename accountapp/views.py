@@ -10,6 +10,7 @@ from django.urls import reverse, reverse_lazy
 # django에서 제공하는 CreateView 가져오기
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic.list import MultipleObjectMixin
 
 from accountapp.decorators import account_ownership_required
 from accountapp.forms import AccountUpdateForm
@@ -17,6 +18,8 @@ from accountapp.models import HelloWorld
 
 # 직접 만든 데코레이터를 배열에 집어넣음
 # 이 배열만 메서드 데코레이터 에게 넘겨주면 된다
+from articleapp.models import Article
+
 has_ownership = [
   account_ownership_required,
   login_required
@@ -54,7 +57,8 @@ class AccountCreateView(CreateView):
   # 계정생성 템플릿은 만들어야 한다.
   template_name = 'accountapp/create.html'
 
-class AccountDetailView(DetailView):
+# MultipleObjectMixin : 여러가지 Object를 다룰 수 있는 Mixin을 가져온다.
+class AccountDetailView(DetailView, MultipleObjectMixin):
   model = User
   # 템플릿에서 사용하는 user 객체의 이름을 다르게 설정
   # 특정 pk를 가지는 user의 url로 접속하면 그 pk의 user 정보를 보여주어야 하므로  context_object_name 에 저장
@@ -65,6 +69,11 @@ class AccountDetailView(DetailView):
   # 즉 현재 방문하고 있는 유저의 정보 = context_object_name
   context_object_name = 'target_user'
   template_name = 'accountapp/detail.html'
+
+  paginate_by = 25
+  def get_context_data(self, **kwargs):
+    object_list = Article.objects.filter(writer=self.get_object())
+    return super(AccountDetailView, self).get_context_data(object_list=object_list, **kwargs)
 
 # Update, Delete에도 context_object_name을 넣어준다
 
